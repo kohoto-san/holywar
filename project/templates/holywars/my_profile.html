@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+   
+    {% load staticfiles %}
+
+    <!-- 
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} " />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+    <body class="thread_body">
+
+        <div class="header">
+
+            <a href="/" class="header_title"> DnBe </a>
+
+            <a href="/accounts/logout/" class="header_my_profile"> Logout </a>
+
+            <a href="/my_profile" class="header_my_profile" style="  border-right: 1px solid black;padding-right: 20px;">    My profile 
+            </a>
+
+        </div>
+
+        <div id="main" style="max-width: 800px;margin:20px auto;">
+
+        <div style="background-color:white;height:80px;margin-bottom:50px;" id="header_blocks">
+
+            <div class="my_profile_header" id="h_comments">
+                Comments
+            </div><!--
+
+            --><div class="my_profile_header" id="h_threads">
+                Threads
+            </div><!--
+
+            --><div class="my_profile_header" id="h_holywars">
+                Holywars
+            </div>
+            
+        </div>
+
+        <style type="text/css">
+
+            .my_profile_header{
+                line-height:80px;
+                width:100%;
+                text-align:center;
+                display: inline-block;
+            }
+
+            .my_profile_header_active{
+                background-color: rgb(248,248,248);
+            }
+
+            .my_profile_header:hover{
+                color:  blue;
+                cursor: pointer;
+            }
+
+        </style>
+
+        <div id="wrapper">
+
+        <div class="thread_wrapper" style="display:none;" id="threads">
+
+        {% for thread in threads %}
+        <div class="thread" style="border-radius: 0;margin-bottom: 20px;">
+
+            <div class="thread_header">
+
+                <a href="/h/{{thread.holywar.id}}" class="holywar_in_thread">
+                    {{thread.holywar.holywar_object_1}} vs. {{thread.holywar.holywar_object_2}}
+                </a>
+
+                <br />
+
+                {% if thread.argument_for == '1' %}
+                    <p class="thread_in_support">
+                        Thread in support <b> {{thread.holywar.holywar_object_1}} </b>
+                    </p>
+
+                {% elif thread.argument_for == '2' %}
+                    <p class="thread_in_support">
+                        Thread in support <b> {{thread.holywar.holywar_object_2}} </b>
+                    </p>
+
+                {% endif %}
+
+
+                <div class="thread_header_like">
+
+                    <!--
+
+                    <img src="/static/img/like0.png" class="comment_like_img" id="thread_like" style="cursor:pointer;" />
+                    <p class="comment_like_n" id="thread_like_n" style="margin: 15px 5px 10px 10px;"> 2 </p>
+
+                    -->
+
+                    <div class="comment_footer" style="margin-top: 15px;font-size: 20px;">
+                        {{thread.time_ago_create}}
+                    </div>
+
+                     
+
+                </div>
+
+
+            </div>
+
+            <a href="/h/{{thread.holywar.id}}/{{thread.id}}" class="thread_name" style="  display: block;font-size: 2em;font-weight: bold;color: black;">
+                {{ thread.name }}
+            </a>
+
+        </div>
+        {% endfor %}
+
+        </div>
+
+
+        <div class="thread_comment_wrapper" id="comments" style="background:0;">
+
+        {% for comment in comments %}
+
+            <a href="/h/{{comment.thread.holywar.id}}/{{ comment.thread.id }}" class="thread_comment" style="margin-left:0;border-bottom: 1px solid rgb(219, 219, 219);margin-bottom: 20px;padding-bottom: 20px;display:block;">
+
+                <div class="thread_comment_header">
+                    
+                    <img src="/static/avatar/{{comment.avatar}}.png" class="comment_ava"></img>
+
+                    <div class="comment_footer" style="color:black;">
+                        {{ comment.time_ago_create }}
+                    </div>
+
+                    <!--
+
+                    <img src="/static/img/like{{comment.i_like}}.png" class="comment_like_img comment_img" id="comment_{{comment.id}}" style="cursor:pointer;" />
+
+                    <p class="comment_like_n" id="number_{{comment.id}}" style="color:black;"> {{ comment.comment_likes }} </p>
+
+                    -->
+                        
+                </div>
+
+
+                <p class="thread_comment_text" style="margin-bottom:0;color:black;"> {{ comment.text }} </p>
+
+
+
+            </a>
+
+
+            {% if forloop.last %}
+                <hr />
+            {% else %}
+
+            {% endif %}
+
+
+        {% endfor %}
+
+        </div>
+
+        <div class"holywar_wrappper" id="holywars" style="display:none;">
+
+            <div class="thread_grid_main" style="padding-bottom: 100px;width:90%;margin:0 auto;background:transparent;padding-top: 0;">
+
+                {% for holywar in holywars %}
+
+                    <!-- display: inline-block;margin-left: 50px; -->
+                    <a href="h/{{holywar.id}}" class="thread_grid" style="max-width: 550px;">
+                        
+                        <h2 class="thread_grid_name" style="padding-bottom: 0px;text-align:center;"> {{ holywar.holywar_object_1 }} VS. {{ holywar.holywar_object_2 }} </h2>
+                        
+                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.time_ago_create}}</p>
+
+                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.threads}} replies </p>
+
+                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.holywar_likes}} likes </p>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+            
+
+        </div>
+
+
+
+        </div>
+        </div>
+
+        <style type="text/css">
+
+            .thread_comment{
+                background-color: white;
+            }
+
+            .thread_comment:hover{
+               background-color: rgba(255, 255, 255, 0.5);
+               background-color:  #f5f8fa;
+            }
+
+            .thread_name:hover{
+                opacity: 0.6;
+            }
+
+        </style>
+       
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script src="{% static 'js/autoresize.jquery.js' %}"></script>
+
+    <script type="text/javascript">
+
+        w = $('.my_profile_header').width() / 3;
+
+        $('.my_profile_header').css('width', w + 'px');
+
+        $('#header_blocks div').click(function() {
+            id = $(this).attr('id');
+            id = id.slice(2);
+
+            item = $('#' + id);
+
+            item.css('display', 'block');
+            item.siblings().css('display', 'none');
+
+            $(this).siblings().removeClass('my_profile_header_active');
+            $(this).addClass('my_profile_header_active');
+
+
+        });
+
+
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        // $('.header_menu').
+              
+
+
+    </script>
+
+
+    </body>
+</html>

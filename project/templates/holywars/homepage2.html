@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+
+   
+    <!-- 
+    {% load staticfiles %}
+
+
+
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+
+<!--
+body:
+    background-color: rgb(221, 222, 225);
+-->
+    <body style="background-color: #f34846;">
+
+        
+        <div class="div-text">
+        <h3 class="text"> Thank you for being a Secret user. Sadly, we will be discontinuing the service imminently. Please read about it. </h3>
+        </div>
+
+        {{error}}
+
+        <div class="divs">
+
+        <form action="" method="post" id="subscribeForm" role="form" style="margin-left: auto;margin-right: auto;">
+
+            {% csrf_token %}
+
+            <input id="id_invite" maxlength="30" name="invite" type="text" class="textbox" placeholder="Desc" />
+
+            <input type="submit" value="Submit" class="css_button_4">
+
+        </form>
+
+
+
+        </div>
+
+<style>
+
+    .div-text{
+        text-align: center;
+        font-family: 'effra-reg';
+        font-size: 18px;
+        max-width: 370px;
+        line-height: 26px;
+        margin: auto auto;
+        color: white;
+        letter-spacing: 0.1rem;
+        margin-bottom: 100px;
+    }
+
+    .text{
+
+        color: white;
+        margin-top: 150px;
+
+    }
+
+    .divs{
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #subscribeForm{
+        margin: 0 auto;
+    }
+
+    .textbox{
+        margin-left;
+        font-family: 'Montserrat', arial, sans-serif;
+        border: 1px solid #c4c4c4;
+        height: 52px;
+        width: 300px;
+        font-size: 26px;
+        border-radius: 4px;
+    }
+
+    .css_button_4{
+        border: 0px solid transparent;
+        border-radius: 5px;
+        font-family: 'Montserrat',arial, helvetica, sans-serif;
+        padding: 15px;
+        text-decoration: none;
+        display: inline-block;
+        color: #ffffff;
+        background-color: #1abc9c;
+        font-size: 18px;
+        position: relative;
+        bottom: 3px;
+    }
+
+    .css_button_4:hover {
+        border: 0px solid transparent;
+        background-color: #03876D;
+    }
+
+</style>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        if ( {{status}} == 'fail' ){
+
+        }
+
+        if( {{status}} == 'success' ){
+
+        }
+
+
+    </script>
+
+
+    </body>
+</html>

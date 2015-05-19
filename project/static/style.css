@@ -1,0 +1,588 @@
+body,html{
+	margin: 0;
+	padding: 0;
+	background-color: rgb(221, 222, 225);
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+html{
+	background-color: transparent;
+}
+
+a{
+	text-decoration: none;
+}
+
+.header{
+	height: 50px;
+	background-color: white;
+	font-size: 20px;
+    border-bottom: 2px solid #9a9a9a;
+}
+
+.header_title{
+    line-height: 50px;
+    display: inline-block;
+
+    font-size: 2em;
+    padding: 0px 30px;
+
+    color: black;
+}
+
+.header_menu{
+    width: 55px;
+    height: 55px;
+    background-image: url('/static/img/menu_icon.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px 16px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+}
+
+.header_new_holywar{
+	display: inline-block;
+    margin: 1em 1em 1em 20px;
+    font-size: 20px;
+    color: black;
+    border: 1px solid rgb(249, 249, 249);
+    padding: 10px;
+}
+
+.header_new_holywar:hover{
+	background-color: rgb(240,240,240);
+}
+
+.header_my_profile{
+	display: inline-block;
+    float: right;
+    line-height: 50px;
+    margin: 0 10px
+}
+
+.main{
+	width: 100%;
+}
+
+.holywar_name_grid{
+	width: 100%;
+	padding: 50px 0;
+	display: table;
+	border-bottom: 2px solid;
+	border-color: white;
+}
+
+.holywar_name_title{
+	text-align: center;
+	color: white;
+	vertical-align: middle;
+	display: table-cell;
+	font-size: 25px;
+}
+
+
+
+/*//////////////////////////////////////*/
+
+.holywar_name{
+	width: 100%;
+	text-align: center;
+
+	padding-bottom: 30px;
+	
+    /*
+	height: 150px;
+	*/
+
+
+	/*
+	display: table;
+	*/
+
+}
+
+
+.holywar_object{
+	/*
+	display: table-cell;
+	*/
+
+	text-align: center;
+	width: 100%;
+
+	/* */
+
+	display: inline-block;
+	
+
+    /*
+    -webkit-transform: skewX(-23deg);
+    -ms-transform: skewX(-23deg);
+    transform: skewX(-23deg);
+    */
+
+
+}
+
+.holywar_object_name{
+	background-color: #f2f2f2;
+
+	padding: 50px 0;
+	line-height: 100px;
+	font-size: 25px;
+	color: black;
+}
+
+.holywar_object textarea{
+
+	background-color: transparent;
+
+    outline: 0;
+	width: 80%;
+	height: 50px;
+	border: 0;
+	padding: 0;
+	resize: none; 
+
+	word-wrap: break-word;
+    font-size: 1.5em;
+
+    padding-bottom: 50px;
+
+}
+
+.textarea{
+
+	background-color: transparent;
+
+    outline: 0;
+	width: 70%;
+	height: 50px;
+	border: 0;
+	padding: 0;
+	resize: none; 
+
+	font-size: 30px;
+}
+
+
+.holywar_object_description{
+
+	background-color: #AFE5F7;
+	
+	padding: 50px 0;
+	line-height: 100px;
+	font-size: 25px;
+	color: black;
+}
+
+#create_holywar{
+	width: 100%;
+    border: 0;
+    outline: 0;
+
+    cursor: pointer;
+
+    padding: 20px 0;
+    
+
+    /*
+    margin-top: 30px;
+    */
+    
+
+    margin-bottom: 0;
+    font-size: 20px;
+
+    background-color: #8AB8E6;
+}
+
+@media all and (min-width: 700px){
+
+    .holywar_object_name{
+        border-top-radius: 5px;
+
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .holywar_object{
+	    width: 40%;
+	    margin-top: 20px;
+
+	    vertical-align: top;
+    }
+
+    .holywar_object_description{
+	    border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    #create_holywar{
+    	width: 50%;
+    	margin-left: auto;
+    	margin-right: auto;
+    	display: block;
+    }
+
+}
+
+
+
+
+.arguments{
+	margin-top: 10px;
+}
+
+.argument_title{
+	
+	/*
+	background-color: #AEAEAE;
+	background-color: #99CCFF;
+	*/
+
+	text-align: center;
+
+	padding-top: 30px;
+    padding-bottom: 10px;
+
+	font-size: 20px;
+}
+
+.argument_grid{
+	line-height: 20px;
+    
+    padding: 10px 0;
+
+    border-bottom: 2px solid #9a9a9a;
+
+    width: 70%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    background-color: white;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    color: black;
+}
+
+.argument_grid:hover{
+
+	background-color: rgba(248,248,248,1);
+}
+
+@media all and (min-width: 700px){
+	.arguments{
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+	}
+
+	.argument_title{
+	    text-align: left;
+	    margin-left: auto;
+	    margin-right: auto;
+	}
+
+}
+
+@media all and (max-width: 699px){ 
+    
+    .arguments{
+    	display: block;
+	    text-align: left;
+    }
+
+    .argument_title{
+	    text-align: left;
+	    padding-left: 20px;
+    }
+
+} 
+
+
+.thread_grid_main{
+	width: 100%;
+
+	padding-top: 50px;
+
+    /*
+	background-color: #f2f2f2;
+	background-color: #f5f5f5;
+	*/
+
+	/*
+	background-color: #e5e5e5;
+	*/
+
+	background-color: #f5f5f5;
+}
+
+.thread_grid_title{
+	text-align: left;
+	color: black;
+	padding-top: 20px;
+	padding-left: 30px;
+	margin: 0;
+}
+
+.thread_grid{
+
+	max-width: 950px;
+	
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+
+
+	background-color: white;
+
+
+    /* x y размытие растяжение*/
+
+    /*
+     -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+
+    box-shadow: 5px 5px 3px 0px rgba(0,0,0,0.1);
+    */
+	
+	border: 1px solid #e5e5e5;
+	border: 1px solid rgb(219, 219, 219);
+
+	margin-top: 25px;
+
+}
+
+.thread_grid:hover{
+	/*
+	background: rgba(238,238,238,0.95);
+	*/
+
+    /*
+    background: rgba(245,245,245,0.95);
+	background: #f5f5f5;
+	*/
+
+	/*
+	background: rgba(0,0,0,0.4);
+	*/
+
+
+	background-color: rgba(248,248,248,1);
+}
+
+
+/*
+
+#####################################
+Для отображения холиваров в 2 колонки
+#####################################
+
+@media all and (min-width: 900px){
+
+    .thread_grid{
+    	display: inline-block; 
+	    margin-left: 50px;
+    }
+
+}
+
+@media all and (max-width: 899px){
+    
+    .thread_grid{
+	    margin-left: auto;
+	    margin-right: auto;
+	    display: block;
+
+	 }
+}
+
+#####################################
+Для отображения холиваров в 2 колонки
+#####################################
+
+*/
+
+.thread_grid_name{
+	font-size: 20px;
+    padding-top: 30px;
+    padding-left: 25px;
+    margin: 0;
+    color: black;
+}
+
+.thread_grid_footer{
+    opacity: 0.6;
+    padding: 20px 10px 10px 25px;
+    margin: 0;
+    color: black;
+}
+
+
+@media all and (max-width: 699px){
+	#holywar_object-2{
+		margin-top: 0;
+	}
+}
+
+
+
+
+
+
+/*//////////////////////////////////////////////////*/
+
+
+.thread{
+    background-color: rgba(245,245,245,0.95);
+}
+
+@media all and (min-width: 700px){
+	.thread{
+		border-top-left-radius:5px;
+		border-top-right-radius:5px;
+	}
+}
+
+.holywar_in_thread{
+	color: black;
+
+    line-height: 50px;
+    padding: 20px 30px 20px 20px;
+
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+
+.holywar_in_thread:hover{
+    background-color: rgb(250,250,250);
+    border-top-left-radius: 5px;
+}
+
+.thread_in_support{
+	margin: 0;
+    line-height: 20px;
+
+    color: black;
+    padding: 25px 30px 5px 20px;
+}
+
+.thread_header_like{
+	height: 40px;
+}
+
+.thread_header_argument{
+	font-size: 20px;
+    padding: 10px 15px;
+    border: 1px solid #e5e5e5;
+    margin-top: 5px;
+
+    float: right;
+    margin-right: 5px;
+    color: black;
+}
+
+.thread_header_argument:hover{
+    background-color: rgba(250,250,250,1);
+}
+
+.thread_name{
+	padding-top: 20px;
+	
+	margin: 0 auto;
+	width: 90%;
+
+	text-align: center;
+	line-height: 35px;
+	padding-bottom: 30px;
+
+	word-wrap: break-word;
+}
+
+.thread_description{
+	background-color: rgba(235,235,235,0.95);
+	line-height: 30px;
+	margin: 0;
+	padding: 10px 10px 20px 20px;
+	text-align: left;
+}
+
+.thread_comment{
+	margin-left: 5px;
+	padding-top: 20px;
+}
+
+.thread_comment_text{
+	font-size: 20px;
+
+	width: 90%;
+    margin: 20px auto;
+}
+
+.comment_ava{
+	display: inline-block;
+	width: 32px;
+    height: 32px;
+   margin-left: 10px;
+}
+
+.comment_like_img{
+	height: 32px;
+	width: 32px;
+	display: inline-block;
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.comment_like_n{
+	float: right;
+	font-size: 20px;
+
+	margin-top: 15px;
+    margin-right: 5px;
+}
+
+.comment_footer{
+	height: 20px;
+	opacity: 0.6;
+	margin-left: 10px;
+	display: inline-block;
+}
+
+.comment_textarea{
+
+	background-color: transparent;
+
+    outline: 0;
+	height: 50px;
+	border: 0;
+	padding: 10px 0px 40px 10px;
+	width: 100%;
+	resize: none; 
+
+	font-size: 20px;
+}
+
+
+.thread_comment_wrapper{
+	    background-color: white;
+	    margin-bottom: 40px;
+}
+
+@media all and (min-width: 700px){
+
+    .thread_body{
+	    background-color: rgb(251, 252, 255);
+	    background-color: rgb(221, 222, 225);
+        margin: 0 auto;
+    }    
+
+    #create_holywar{
+    	margin-right: 0;
+    }
+
+}

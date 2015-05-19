@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+   
+    <!-- 
+    <link rel="shortcut icon" href="static 'img/logo.ico' "> 
+    <link rel="stylesheet" type="text/css" href=" 'css/style.css' " />
+    -->
+
+    {% load staticfiles %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="header">
+
+            <a href="/" class="header_title"> DnBe </a>
+
+            <a href="/accounts/logout/" class="header_my_profile"> Logout </a>
+
+            <a href="/my_profile" class="header_my_profile" style="  border-right: 1px solid black;padding-right: 20px;">    My profile 
+            </a>
+
+        </div>
+
+
+        <a href="/new_holywar" class="header_new_holywar"> New Battle </a>
+
+
+        <div class="main" style="padding-top: 20px;">
+            
+            <div class="thread_grid_main" style="padding-bottom: 100px;width:90%;margin:0 auto;background:transparent; padding-top:0;">
+
+                {% for holywar in object_list %}
+
+                    <!-- display: inline-block;margin-left: 50px; -->
+                    <a href="{{holywar.id}}" class="thread_grid" style="max-width: 550px;">
+                        
+                        <h2 class="thread_grid_name" style="padding-bottom: 0px;text-align:center;"> {{ holywar.holywar_object_1 }} VS. {{ holywar.holywar_object_2 }} </h2>
+                        
+                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.time_ago_create}}</p>
+
+                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.threads}} replies </p>
+
+                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.holywar_likes}} likes </p>
+
+
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+
+    </body>
+</html>

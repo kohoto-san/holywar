@@ -1,0 +1,206 @@
+{% load i18n %}
+{% load account %}
+{% load url from future %}
+
+<!-- 
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+-->
+
+{% block content %}
+
+<!--
+
+<h1>{% trans "Sign In" %}</h1>
+
+{% if socialaccount.providers  %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+for a {{site_name}} account and sign in below:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+	{% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+  <div class="login-or">{% trans 'or' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
+
+-->
+
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+   
+    {% load staticfiles %}
+
+    <!-- 
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} " />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+<body style="background-color: #f34846;">
+
+
+<div>
+
+<!--
+	<form class="login" method="POST" action="{% url 'account_login' %}">
+		{% csrf_token %}
+		{{ form.as_p }}
+		
+		{% if redirect_field_value %}
+			<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+		{% endif %}
+		
+		<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+		<button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+	</form>
+-->
+
+		
+
+    <div class="login_center">
+
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+		{% csrf_token %}
+
+		    <input autofocus="autofocus" id="id_login" name="login" class="login_field" placeholder="E-mail address" type="email" />
+
+            <input id="id_password" name="password" placeholder="Password" type="password" class="login_field"/>
+
+            <label for="id_remember" style="color:white;font-family: sans-serif;  font-size: 18px;margin-right:10px;">Remember Me</label> 
+            <input id="id_remember" name="remember" type="checkbox" style="margin: 30px 0px;" />
+
+		    {% if redirect_field_value %}
+			    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+		    {% endif %}
+
+            <button class="css_button_4" type="submit"> {% trans "Sign In" %} </button>
+
+
+            <!--
+            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            -->
+
+
+
+
+
+
+
+        </form>
+</div>
+
+
+
+
+		
+
+</div>
+
+
+<style type="text/css">
+
+
+
+.login{
+	margin: 100px auto;
+  text-align: center;
+}
+
+.css_button_4{
+
+        width: 200px;
+        text-align: center;
+
+        margin: 0 auto;
+        display: block;
+        font-family: 'Montserrat',arial, helvetica, sans-serif;
+        padding: 15px;
+        color: #ffffff;
+        background-color: #1abc9c;
+        font-size: 18px;
+        border: 0;
+
+    }
+
+    .css_button_4:hover {
+        border: 0px solid transparent;
+        background-color: #03876D;
+        cursor: pointer;
+    }
+
+
+
+	
+.login_center {
+  width: 260px;
+   margin-top:30px;
+
+   margin: 0 auto;
+
+
+}
+
+
+ .login_center .login_center_submit_helper {
+  
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+/*
+.login_center .form_row:first-child {
+  border-top: 0;
+}
+*/
+
+
+ .login_field{
+  padding: 11px 10px 11px 13px;
+  margin: 0;
+  border: 0;
+  font: 16px/1.4 "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+  box-sizing: border-box;
+
+
+  border-top: 1px solid #e3e3e3;
+
+  width: 100%;
+
+}
+
+
+</style>
+
+</body>
+</html>
+
+{% endblock %}

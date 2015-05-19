@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+   
+    {% load staticfiles %}
+
+    <!-- 
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} " />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+    <body class="thread_body">
+
+        <div class="header">
+
+            <a href="/" class="header_title"> DnBe </a>
+
+            <a href="/accounts/logout/" class="header_my_profile"> Logout </a>
+
+            <a href="/my_profile" class="header_my_profile" style="  border-right: 1px solid black;padding-right: 20px;">    My profile 
+            </a>
+
+        </div>
+
+        <div id="main" style="max-width: 800px;margin:20px auto;">
+
+
+        <div class="thread">
+
+            <div class="thread_header">
+
+                <a href="/h/{{object.holywar.id}}" class="holywar_in_thread">
+                    {{object.holywar.holywar_object_1}} vs. {{object.holywar.holywar_object_2}}
+                </a>
+
+                <br />
+
+                {% if argument %}
+             
+                    <p class="thread_in_support">
+                        Thread in support <b> {{argument}} </b>
+                    </p>
+
+                {% endif %}
+
+                <div class="thread_header_like">
+
+                    <img src="/static/img/like{{i_like_thread}}.png" class="comment_like_img" id="thread_like" style="cursor:pointer;" />
+
+                    <p class="comment_like_n" id="thread_like_n" style="margin: 15px 5px 10px 10px;"> {{object.thread_likes}} </p>
+
+
+                    <div class="comment_footer" style="margin-top: 15px;font-size: 20px;">
+                            {{object.time_ago_create}}
+                    </div>
+
+                     
+
+                </div>
+
+
+            </div>
+
+
+            <h1 class="thread_name">
+                {{ object.name }}
+            </h1>
+
+        </div>
+
+        <hr style="margin:0;" />
+
+        <h3 class="thread_description">
+            {{ object.description }}
+        </h3>
+
+        <hr style="margin-top:0;margin-bottom:20px;" />
+
+        <div class="thread_comment_wrapper">
+
+        {% for comment in comments %}
+
+            <div class="thread_comment">
+
+                <div class="thread_comment_header">
+                    
+                    <img src="/static/avatar/{{comment.avatar}}.png" class="comment_ava"></img>
+
+                    <div class="comment_footer">
+                        {{comment.time_ago_create}}
+                    </div>
+
+                    {% if comment.id in comments_like %}
+                        <img src="/static/img/like1.png" class="comment_like_img comment_img" id="comment_{{comment.id}}" style="cursor:pointer;" />
+
+                    {% else %}
+                        <img src="/static/img/like0.png" class="comment_like_img comment_img" id="comment_{{comment.id}}" style="cursor:pointer;" />
+
+                    {% endif %}
+
+                    <p class="comment_like_n" id="number_{{comment.id}}"> {{ comment.comment_likes }} </p>
+                        
+                </div>
+
+
+                <p class="thread_comment_text"> {{ comment.text }} </p>
+
+
+
+            </div>
+
+
+            {% if forloop.last %}
+                <hr />
+            {% else %}
+                <hr />
+
+            {% endif %}
+
+
+        {% endfor %}
+
+        </div>
+
+        <div class="thread_comment_wrapper">
+
+            <form action="" method="post">
+            {% csrf_token %}
+
+                <textarea class="comment_textarea"  id="id_text" name="text" placeholder="Your opinion is..."></textarea>
+
+                <input type="submit" value="Create" id="create_holywar" />
+            </form>
+
+        </div>
+
+        <!--
+rgb(251, 252, 255)
+        -->
+
+            
+
+        </div>
+       
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script src="{% static 'js/autoresize.jquery.js' %}"></script>
+
+
+    <script type="text/javascript">
+
+        $('.comment_img').click(function() {
+
+            img_like = $(this);
+
+            id = $(this).attr('id');
+            id = id.slice(8);
+
+            $.get( "/like_comment", {pk: id}, function( data ) {
+                number_comment = 'number_' + id;
+                
+                // $('#' + number_comment).text(data);
+
+                if( data == 'liked'){
+                    number_likes = $('#' + number_comment).text();  // кол-во лайков
+                    number_likes = parseInt(number_likes);
+                    $('#' + number_comment).text(number_likes + 1); // кол-во лайков + 1
+                    img_like.attr('src', '/static/img/like1.png');  // меняем картинку лайка
+                }
+
+            });
+
+        });
+
+        $('#thread_like').click(function() {
+
+            img_like = $(this);
+
+            id = {{object.id}};
+
+            $.get( "/like_thread", {pk: id}, function( data ) {
+                
+                // $('#' + number_comment).text(data);
+
+                if( data == 'liked'){
+                    number_likes = $('#thread_like_n').text();
+                    number_likes = parseInt(number_likes);
+
+                    $('#thread_like_n').text(number_likes + 1);
+
+                    img_like.attr('src', '/static/img/like1.png');
+                }
+
+            });
+
+        });
+
+
+        $( document ).ready(function() {
+
+
+                comment_textarea = $('.comment_textarea')
+
+                w = comment_textarea.width() - 10;
+                comment_textarea.css('width', w + 'px');
+
+        
+        });
+
+        jQuery('textarea').autoResize({
+            extraSpace : 0
+        });
+
+        
+
+
+    </script>
+
+
+    </body>
+</html>

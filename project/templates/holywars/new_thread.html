@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+	<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+
+	{% load staticfiles %}
+   
+	<!-- 
+	<link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+	-->
+
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+
+	<!--[if IE]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	</head>
+
+	<body class="thread_body">
+
+		<div class="header">
+
+            <a href="/" class="header_title"> DnBe </a>
+
+            <a href="/accounts/logout/" class="header_my_profile"> Logout </a>
+
+            <a href="/my_profile" class="header_my_profile" style="  border-right: 1px solid black;padding-right: 20px;">    My profile 
+            </a>
+
+        </div>
+
+		<form action="" method="post" style="max-width:800px;margin:0 auto;">
+
+		{% csrf_token %}
+
+			<div class="new_holywar_error">
+
+				{% if form.errors %}
+
+					Oops!
+
+				{% endif %}
+				
+			</div>
+            
+            <div style="margin-top:20px;">
+			    <input type="checkbox" id="checkbox" />
+                <label> It is thread in support </label>
+                <select disabled id="select_list">
+                	<option value="0"> None </option>
+                	<option value="1"> {{ holywar.holywar_object_1 }} </option>
+                	<option value="2"> {{ holywar.holywar_object_2 }} </option>
+                </select>
+            </div>
+
+            <input style="display:none;" id="id_argument_for" maxlength="1" name="argument_for" type="text" value="0" />
+
+
+			<div class="thread" style="cursor:text;margin-top: 30px;padding:40px 0;">
+
+				<h1 class="thread_name">
+					<textarea id="id_name" class="textarea" name="name" placeholder="Name thread"></textarea>
+				</h1>
+
+			</div>
+
+			<hr style="margin:0;" />
+
+			<h3 class="thread_description" style="cursor:text;padding: 30px;">
+				<textarea id="id_description" class="textarea" name="description" placeholder="Description Thread"></textarea>
+			</h3>
+
+			<hr style="margin-top:0;margin-bottom:20px;" />
+
+			<input type="submit" value="Create" id="create_holywar" />
+
+		</form>
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<script src="{% static 'js/autoresize.jquery.js' %}"></script>
+
+
+	<script type="text/javascript">
+
+
+		jQuery('textarea').autoResize({
+			extraSpace : 0
+		});
+  
+
+		$('.thread_name').click(function() {
+			$(this).find('textarea').focus();
+		});
+
+		$('.thread_description').click(function() {
+			$(this).find('textarea').focus();
+		});
+
+
+        $('#checkbox').click(function () {
+
+        	// Если checkbox True
+		    if ( $('#checkbox').is(':checked') ){
+			
+			    $('select').removeAttr('disabled');
+		    }
+
+		    // Если False
+		    else{
+		    	$('select').attr('disabled', ' ');
+		    }
+
+        });
+
+        $('select').click(function () {
+
+        	item = $(this).find("option:selected") ;
+
+        	val = item.attr('value'); 
+
+        	$('#id_argument_for').attr('value', val);
+
+        });
+
+
+
+	</script>
+
+
+	</body>
+</html>
+
+
+

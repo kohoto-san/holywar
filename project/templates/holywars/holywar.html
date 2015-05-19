@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+
+    {% load staticfiles %}
+   
+    <!-- 
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="header">
+
+            <a href="/" class="header_title"> DnBe </a>
+
+            <a href="/accounts/logout/" class="header_my_profile"> Logout </a>
+
+            <a href="/my_profile" class="header_my_profile" style="  border-right: 1px solid black;padding-right: 20px;">    My profile 
+            </a>
+
+        </div>
+
+
+        <a href="new_thread" class="header_new_holywar"> New Thread </a>
+            
+
+        <div class="holywar_name">
+
+                    <div class="holywar_object" id="holywar_object-1"> 
+
+                    <div class="object_header">
+
+                        <div class="thread" style="border-top-left-radius:5px;border-top-right-radius:5px;">
+
+                            <h1 class="thread_name">
+                                {{ holywar.holywar_object_1 }} 
+                            </h1>
+
+                        </div>
+
+                        <hr style="margin:0;" />
+
+                        <h3 class="thread_description">
+                            {{ holywar.holywar_description_1 }}
+                        </h3>
+
+                    </div>
+
+                        <div class="arguments">
+            
+                            {% for argument_1 in arguments_for_1%}
+
+                                <a href="{{argument_1.id}}" class="argument_grid">
+                                    <p style="margin:0;margin-top: 10px;"> {{argument_1.name}} </p>
+                                    <p class="thread_grid_footer" style="text-align:left;padding: 5px 10px 0px 25px;"> {{ argument_1.thread_likes }} likes</p>
+                                </a>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                    </div>
+                    
+                    <div style="margin: 60px 40px;display: inline-block;">
+                        <img src="/static/img/like{{i_like}}.png" style="cursor:pointer;" id="holywar_like" />
+                        <p style="margin:0;" id="holywar_like_n"> {{holywar.holywar_likes}} </p>
+                    </div>
+
+                    <!--
+
+                    --><div class="holywar_object" id="holywar_object-2"> 
+                        
+                        <div class="object_header">
+                    
+                            <div class="thread">
+
+                                <h1 class="thread_name">
+                                    {{ holywar.holywar_object_2 }} 
+                                </h1>
+
+                            </div>
+
+                            <hr style="margin:0;" />
+
+                            <h3 class="thread_description">
+                                {{ holywar.holywar_description_2 }}
+                            </h3>
+
+                        </div>
+
+                            <div class="arguments" id="argument-2">
+
+                                {% for argument_2 in arguments_for_2 %}
+
+                                    <a href="{{argument_2.id}}" class="argument_grid">
+                                        <p style="margin:0;margin-top: 10px;"> {{argument_2.name}} </p>
+                                        <p class="thread_grid_footer" style="text-align:left;padding: 5px 10px 0px 25px;"> {{ argument_2.thread_likes }} likes</p>
+                                    </a>
+
+                                {% endfor %}
+
+
+                            </div>
+
+                    </div>
+            </div>
+
+        <!--
+            9a9a9a
+        -->
+
+
+        <div class="thread_grid_main" style="padding-bottom: 300px;">
+
+
+            {% for thread in threads %}
+
+                <a href="{{ thread.id }}" class="thread_grid">
+                    <h2 class="thread_grid_name"> {{ thread.name }} </h2>
+                    <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{ thread.time_ago_create }} </p>
+                    <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{ thread.comments }} replies</p>
+                    <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{ thread.thread_likes }} likes</p>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    $( document ).ready(function() {
+
+        if ($(window).width() < 700){
+                        
+
+            // $('#holywar_object-2').before( '<hr style="margin:0;" /> <p> VS. </p> <hr style="margin: 0;" />' );
+            // $('#holywar_object-2').after('<hr style="margin-top:0;margin-bottom:20px;">');
+
+        }
+        else{
+            
+            //$('#holywar_object-2').before( '<h1 style="display: inline-block;position: relative;top: -30px;margin: 0 40px;"></h1> ');
+
+            $('#argument-2').before('<div style="display: inline-block;position: relative;top: -30px;margin: 0 40px;width:48px;"></div>');
+
+            $('.thread_description').after('<hr style="margin-top:0;margin-bottom:20px;">');
+
+        }
+
+         $('#holywar_like').click(function() {
+
+            img_like = $(this);
+
+            id = {{holywar.id}};
+
+            $.get( "/like_h", {pk: id}, function( data ) {
+                
+                if( data == 'liked'){
+                    number_likes = $('#holywar_like_n').text();
+                    number_likes = parseInt(number_likes);
+
+                    $('#holywar_like_n').text(number_likes + 1);
+
+                    img_like.attr('src', '/static/img/like1.png');
+                }
+
+            });
+
+        });
+
+
+
+
+});
+
+
+    </script>
+
+
+    </body>
+</html>

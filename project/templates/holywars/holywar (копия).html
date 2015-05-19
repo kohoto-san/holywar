@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+
+    {% load staticfiles %}
+   
+    <!-- 
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="header">
+
+            Holywar
+
+            <div class="header_menu"> </div>
+
+        </div>
+
+        <div class="header_actions">
+
+            <a href="new_thread" class="header_new_holywar"> New Thread </a>
+
+            <p class="header_my_profile"> My Profile </p>
+
+            
+        </div>
+
+        <div class="holywar_name">
+
+                    <div class="holywar_object" id="holywar_object-1" style="margin-left:auto;margin-right:auto;"> 
+
+                        <div class="holywar_object_name" style="padding: 0;">
+                            {{ holywar.holywar_object_1 }} 
+                        </div>
+
+                        <div class="holywar_object_description" style="padding: 0;">
+                            {{ holywar.holywar_description_1 }}
+                        </div>
+
+                    </div><!--
+
+                    --><div class="holywar_object" id="holywar_object-2"> 
+                    
+                        <div class="holywar_object_name" style="padding: 0;">
+                            {{ holywar.holywar_object_2}} 
+                        </div>
+                    
+                        <div class="holywar_object_description" style="padding: 0;">
+                            {{ holywar.holywar_description_2 }}
+                        </div>
+
+                    </div>
+            </div>
+
+
+
+        <div class="arguments">
+            
+            <div class="argument_title">
+                Arguments for iOS
+            </div>
+
+            <hr />
+
+            {% for argument_1 in arguments_for_1%}
+
+                <div class="argument_grid">
+                    {{argument_1}}
+                </div>
+
+                <hr />
+
+            {% endfor %}
+
+        </div><!--
+
+        --><div class="arguments" id="argument-2">
+
+            <div class="argument_title">
+                Arguments for Android
+            </div>
+
+
+            {% for argument_2 in arguments_for_2 %}
+
+                <hr />
+
+                <div class="argument_grid">
+                    {{argument_2}}
+                </div>
+
+            {% endfor %}
+
+
+
+        </div>
+
+
+        <div class="thread_grid_main" style="text-align:center;padding-bottom: 100px;">
+
+            <h2 class="thread_grid_title"> Threads: </h2>
+
+            {% for thread in threads %}
+
+                <a href="{{ thread.id }}" class="thread_grid">
+                    <p class="thread_grid_name"> {{ thread.name }} </p>
+                    <p class="thread_grid_footer"> {{ thread.time_create }} </p>
+                </a>
+
+                <hr style="max-width:200px;" />
+
+
+            {% endfor %}
+
+        </div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    $( document ).ready(function() {
+
+        if ($(window).width() < 600){
+
+            //$('#argument-2').before( '<hr />');
+            $('#holywar_object-2').before( '<hr .> VS. <hr />' );
+        }
+
+        width = $(window).width();
+        width = (width / 2) - 1; 
+
+        // $('.arguments').css('width', width +'px');
+
+/*
+        
+        margin_original = $('#holywar_object-1').css('margin-left');
+        margin_original = parseInt(margin_original, 10);
+
+        margin_left = margin_original / 2;
+
+        $('#holywar_object-1').css('margin-left', margin_left);
+
+
+        w = $('#holywar_object-2').width();
+
+        $('#holywar_object-2').css('margin-left', margin_left + w);
+
+        $('#holywar_object-1').css('display', 'inline-block');
+        $('#holywar_object-2').css('display', 'inline-block');
+*/
+
+});
+
+
+    </script>
+
+
+    </body>
+</html>
