@@ -6,13 +6,19 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from django.template import RequestContext
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 
 from django.views.generic import ListView, CreateView, DetailView
 from holywars.models import Holywar, HolywarLike, HolywarArgument, Thread, ThreadComments, ThreadCommentsLike, ThreadLike, Invite, InviteForm
 
 import random
 
+from allauth.account.views import SignupView
+
 from django.shortcuts import get_object_or_404
+
+def loginNone(request):
+    return render_to_response('account/a_login_none.html', RequestContext(request))
 
 
 class HolywarList(ListView):
@@ -21,14 +27,39 @@ class HolywarList(ListView):
 
     def get_queryset(self):
         qs = super(HolywarList, self).get_queryset()
-        return qs.order_by('-id')
+        return qs.order_by('-id')[:10]
 
     def dispatch(self, request, *args, **kwargs):
 
         if not self.request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ln')
         else:
             return super(HolywarList, self).dispatch(request, *args, **kwargs)
+
+
+def holywarUpdate(request):
+
+    if request.user.is_authenticated():
+
+        hw = Holywar.objects.all()
+        hw = hw.order_by('-id')
+
+        paginator = Paginator(hw, 10)
+
+        page = request.GET.get('page')
+
+        try:
+            hw = paginator.page(page)
+        except PageNotAnInteger:
+            page = 1
+            hw = paginator.page(1)
+        except (EmptyPage, InvalidPage):
+            hw = paginator.page(paginator.num_pages)
+
+        return render_to_response('holywars/index.html', {"object_list": hw})
+
+    else:
+        return HttpResponseRedirect('/ln')
 
 
 class HolywarCreate(CreateView):
@@ -52,7 +83,7 @@ class HolywarCreate(CreateView):
             return super(HolywarCreate, self).form_valid(form)
 
         else:
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ln')
 
     def get_success_url(self):
         return reverse('holywar_detail', args=(self.object.id,))
@@ -60,7 +91,7 @@ class HolywarCreate(CreateView):
     def dispatch(self, request, *args, **kwargs):
 
         if not self.request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ln')
         else:
             return super(HolywarCreate, self).dispatch(request, *args, **kwargs)
 
@@ -98,8 +129,22 @@ class HolywarDetail(DetailView):
         arguments_for_2 = Thread.objects.filter(holywar = holywar_data, argument_for = 2)
         arguments_for_2 = arguments_for_2.all().order_by('-thread_likes')[:5]
 
-        threads = Thread.objects.filter(holywar=holywar_data)
-        threads = threads.order_by('-id')
+        threads_data = Thread.objects.filter(holywar=holywar_data)
+        threads_data = threads_data.order_by('-id')
+
+        paginator = Paginator(threads_data, 10)
+
+        page = self.request.GET.get('page')
+
+        try:
+            threads = paginator.page(page)
+        except PageNotAnInteger:
+            page = 1
+            threads = paginator.page(1)
+        except (EmptyPage, InvalidPage):
+            threads = paginator.page(paginator.num_pages)
+
+        context["threads"] = threads
 
         p = HolywarLike.objects.filter(holywar=holywar_data, user=self.request.user)
         if p:
@@ -114,8 +159,6 @@ class HolywarDetail(DetailView):
         context["arguments_for_1"] = arguments_for_1
         context["arguments_for_2"] = arguments_for_2
 
-        context["threads"] = threads
-
         # context["comments_list"] = self.model.objects.filter(thread = holywar_data)
         # context["thread"] = get_object_or_404(Thread, pk=pk)
 
@@ -124,7 +167,7 @@ class HolywarDetail(DetailView):
     def dispatch(self, request, *args, **kwargs):
 
         if not self.request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ln')
         else:
             return super(HolywarDetail, self).dispatch(request, *args, **kwargs)
 
@@ -168,7 +211,7 @@ class ThreadCreate(CreateView):
     def dispatch(self, request, *args, **kwargs):
 
         if not self.request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ln')
         else:
             return super(ThreadCreate, self).dispatch(request, *args, **kwargs)
 
@@ -245,7 +288,7 @@ class ThreadDetail(CreateView):
     def dispatch(self, request, *args, **kwargs):
 
         if not self.request.user.is_authenticated():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ln')
         else:
             return super(ThreadDetail, self).dispatch(request, *args, **kwargs)
 
@@ -301,7 +344,7 @@ def my_profile(request):
 
         return render(request, 'holywars/my_profile.html', context)
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/ln')
 
 
 def homepage(request):
@@ -311,3 +354,15 @@ def homepage(request):
 
     else:
         return render_to_response("holywars/homepage.html", RequestContext(request))
+
+
+class HomepageView(SignupView):
+
+    def get_context_data(self, **kwargs):
+
+        context = super(HomepageView,
+                        self).get_context_data(**kwargs)
+
+        #context['login_form'] = LoginForm() # add form to context
+
+        return context

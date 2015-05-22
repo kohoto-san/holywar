@@ -25,7 +25,7 @@
 
         <div class="header">
 
-            <a href="/" class="header_title"> DnBe </a>
+            <a href="/" class="header_title"> DnBE </a>
 
             <a href="/accounts/logout/" class="header_my_profile"> Logout </a>
 
@@ -42,30 +42,97 @@
             
             <div class="thread_grid_main" style="padding-bottom: 100px;width:90%;margin:0 auto;background:transparent; padding-top:0;">
 
-                {% for holywar in object_list %}
+            {% for holywar in object_list %}
+                <a href="{{holywar.id}}" class="thread_grid" style="max-width: 550px;">
+                    <h2 class="thread_grid_name" style="padding-bottom: 0px;text-align:center;"> {{ holywar.holywar_object_1 }} VS.         {{ holywar.holywar_object_2 }} </h2>
+                    <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.time_ago_create}}</p>
+                    <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.threads}} replies </p>
+                    <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.holywar_likes}} likes </p>
+                </a>
+            {% endfor %}
 
-                    <!-- display: inline-block;margin-left: 50px; -->
-                    <a href="{{holywar.id}}" class="thread_grid" style="max-width: 550px;">
-                        
-                        <h2 class="thread_grid_name" style="padding-bottom: 0px;text-align:center;"> {{ holywar.holywar_object_1 }} VS. {{ holywar.holywar_object_2 }} </h2>
-                        
-                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.time_ago_create}}</p>
-
-                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.threads}} replies </p>
-
-                        <p class="thread_grid_footer" style="text-align:left;display:inline-block;"> {{holywar.holywar_likes}} likes </p>
-
-
-
-                    </a>
-
-                {% endfor %}
 
             </div>
+
+            <div style="margin: 0 auto;width: 100%;max-width: 300px;padding-bottom: 20px;">
+
+            {% if object_list.has_previous %}
+                <a href="?page={{ object_list.previous_page_number }}" id="hw_load"> Previous Battles </a>
+            {% endif %}
+                
+            {% if object_list.has_next %}
+                <a href="?page={{ object_list.next_page_number }}" style="float:right;margin-bottom: 20px;" id="hw_load"> Next Battles </a>
+            {% endif %}
+
+            </div>
+
+            
+
 
         </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        function ajax_get_update(){
+            
+            $.get(url, function(results){
+
+                $('#hw_load').remove();
+
+                var hws = results;
+                var now = $('.thread_grid_main').html();
+
+                result = now + hws;
+
+                $('.thread_grid_main').html(result);
+
+                link = $('#link_more_none').html();
+
+                $('#link_load').html(link);
+
+            }, "html");
+
+        }
+
+
+        $( document ).ready( function() {
+
+            url = '/next-page/?page=1';
+            ajax_get_update();
+            
+            $( '#hw_load1' ).click( function(e) {
+                e.preventDefault();
+                url = ($( '#hw_load' )[0].href);
+                ajax_get_update();
+
+                page_now = $(this).attr('href').slice(17);
+
+                page_next = parseInt(page_now) + 1;
+                page_next = page_next.toString();
+
+                page_url = $(this).attr('href').slice(0, 17);
+                page_url = page_url + page_next;
+
+                $(this).attr('href', page_url);
+            });
+
+        });
+
+
+    </script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63205607-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 
     </body>

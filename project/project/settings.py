@@ -76,13 +76,12 @@ INSTALLED_APPS = (
 ## Django-allauth ##
 SITE_ID = 1
 
-ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
 
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
 
-#SOCIALACCOUNT_QUERY_EMAIL = True
-
-
-ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 # auth and allauth settings
 LOGIN_REDIRECT_URL = '/h'
@@ -145,3 +144,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = 'michael@dnbe.co'
+EMAIL_HOST_PASSWORD = 'MyPassForGoogleApps-michael'
+
+EMAIL_PORT = 587

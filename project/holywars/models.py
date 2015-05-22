@@ -52,7 +52,7 @@ class HolywarLike(models.Model):
     user = models.ForeignKey(User, blank=True, null=True)
 
     def __str__(self):
-        return self.holywar.name
+        return self.holywar.holywar_object_1 + ' VS. ' + self.holywar.holywar_object_2 + '  (' + str(self.holywar.id) + ')'
 
 
 # НАДО ПЕРЕДЕЛАТЬ!
@@ -154,9 +154,6 @@ class ThreadComments(models.Model):
         else:
             minutes = str(minutes) + 'm ago'
             return minutes
-
-    def __str__(self):
-        return self.name
 
     def __str__(self):
         return self.text

@@ -1,9 +1,8 @@
-{% extends "account/base.html" %}
-
 {% load url from future %}
 {% load i18n %}
 {% load account %}
 
+<!--
 {% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
 
 
@@ -30,3 +29,71 @@
 {% endif %}
 
 {% endblock %}
+
+-->
+
+<!DOCTYPE html>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+   
+    {% load staticfiles %}
+
+    <!-- 
+    <link rel="shortcut icon" href="{% static 'img/logo.ico' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} " />
+
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+
+<body style="background-color: #f34846;">
+
+<div style="max-width: 400px;text-align:center;margin:0 auto;">
+
+    <h1>{% trans "Confirm E-mail Address" %}</h1>
+
+    {% if confirmation %}
+
+        {% user_display confirmation.email_address.user as user_display %}
+        
+        <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <strong>{{ email }}</strong> is an e-mail address for your account.{% endblocktrans %}</p>
+
+        <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+        {% csrf_token %}
+            <button type="submit" class="login_button">{% trans 'Confirm' %}</button>
+        </form>
+
+    {% else %}
+
+        {% url 'account_email' as email_url %}
+
+        <p>{% blocktrans %}This e-mail confirmation link expired or is invalid...{% endblocktrans %}</p>
+
+    {% endif %}
+
+
+
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63205607-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

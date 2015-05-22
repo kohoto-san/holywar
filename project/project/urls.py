@@ -16,7 +16,11 @@ urlpatterns = patterns('',
     ## Django-allauth ##
     (r'^accounts/', include('allauth.urls')),
 
-    url(r'^h/$', views.HolywarList.as_view(), name='holywars'),
+    #url(r'^h/$', views.HolywarList.as_view(), name='holywars'),
+    url(r'^h/$', views.holywarUpdate, name='holywars_paginator'),
+
+    url(r'^ln/$', views.loginNone, name='loginNone'),
+
 
     url(r'^new_holywar$', views.HolywarCreate.as_view(), name='new_holywar'),
     url(r'^h/(?P<pk>\d+)/$', views.HolywarDetail.as_view(), name='holywar_detail'),
@@ -31,7 +35,5 @@ urlpatterns = patterns('',
 
     url(r'^my_profile$', views.my_profile, name='my_profile'),
 
-    url(r'^$', views.homepage, name='homepage'),
-
-
+    url(r'^$', views.HomepageView.as_view(), name='homepage'),
 )
